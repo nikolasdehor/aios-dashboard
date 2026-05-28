@@ -1,0 +1,48 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "pt-BR"
+tone_instructions: "Seja profissional, construtivo e foque em qualidade de código. Escreva em português."
+early_access: false
+
+reviews:
+  auto_review:
+    enabled: true
+    base_branches:
+      - main
+      - master
+    drafts: false
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  path_instructions:
+    - path: "src/**/*.ts"
+      instructions: |
+        TypeScript estrito — sem 'any' implícito. Tipos exportados quando reutilizáveis.
+        Tratamento de erro em async (try/catch ou .catch); sem promises não awaited.
+        Sem efeitos colaterais no top-level de módulos.
+        Validação de input em endpoints/handlers (zod, joi, class-validator).
+    - path: "src/**/*.js"
+      instructions: |
+        async/await sobre callbacks; sem callback hell.
+        Verificar tratamento de erro e logging adequado.
+    - path: "app/**"
+      instructions: |
+        Next.js App Router. Distinguir Server vs Client Components.
+        'use client' no topo apenas onde necessário (state, effects, browser APIs).
+        Metadata exports para SEO em páginas relevantes.
+        Server actions com validação e tratamento de erro.
+    - path: "components/**"
+      instructions: |
+        Componentes funcionais com tipagem de props.
+        Sem `any` implícito. Acessibilidade.
+    - path: ".github/**"
+      instructions: Segurança, secrets, sintaxe de workflow.
+    - path: "test/**"
+      instructions: |
+        Testes determinísticos, sem dependência de ordem.
+        Mocks limpos (sem leak entre testes).
+
+chat:
+  auto_reply: true
